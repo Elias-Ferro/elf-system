@@ -6,14 +6,11 @@ import {
   CssBaseline,
   Grid,
   Link,
-  Paper,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { LockOutlined } from "@mui/icons-material";
+import Copyright from "../../components/Copyright";
 
 const defaultTheme = createTheme({
   pallette: {
@@ -27,23 +24,29 @@ const defaultTheme = createTheme({
 });
 
 export default function SignIn() {
-  const requiredField = "Campo obrigatório";
-  // const formik = useFormik({
-  //   initialValues: {
-  //     email: "",
-  //     password: "",
-  //   },
-  //   validationSchema: Yup.object({
-  //     email: Yup.string().email("Email inválido").required(requiredField),
-  //     password: Yup.string().required(requiredField),
-  //   }),
-  // });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component={"main"} sx={{ height: "100vh" }}>
+      <Grid
+        container
+        component={"main"}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          alignItems: "center",
+        }}
+      >
         <CssBaseline />
-        <Grid
+        {/* <Grid
           item
           xs={12}
           sm={4}
@@ -53,34 +56,40 @@ export default function SignIn() {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
           }}
-        />
+        /> */}
         <Grid
           item
           xs={12}
           sm={8}
           md={5}
-          component={Paper}
-          elevation={6}
-          square
+          sx={{
+            marginTop: 30,
+          }}
         >
           <Box
             sx={{
-              my: 8,
+              my: 4,
               mx: 4,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              {/* <LockOutlinedIcon /> */}
-              <LockOutlined />
-            </Avatar>
-            <Typography component={"h1"} variant="h5" fontWeight={'600'}>
-              Elf System
+            {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>LOGO</Avatar> */}
+            <Typography component={"h1"} variant="h5" fontWeight={"600"}>
+              {/* ... */}
             </Typography>
-            <Box component="form" noValidate onSubmit={""} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -103,7 +112,7 @@ export default function SignIn() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, color: "#FFF" }}
+                sx={{ mt: 5, mb: 2, color: "#FFF" }}
               >
                 {"Entrar"}
               </Button>
@@ -112,6 +121,7 @@ export default function SignIn() {
                   <Link variant="body2">Esqueceu a senha?</Link>
                 </Grid>
               </Grid>
+              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
